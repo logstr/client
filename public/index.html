@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    button {
+      height: 300vh;
+    }
+  </style>
+</head>
+<body>
+  <button>go</button>
+  <script src="../dist/logstr.js"></script>
+  <script>
+    logstr.default.init()
+    document.addEventListener('click', () => logstr.default.error("lets gooo"));
+
+  </script>
+</body>
+</html>
