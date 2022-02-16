@@ -2,8 +2,8 @@ import WebRecorder from "./modules/Recorder";
 export declare type SessionUser = {
     id: number;
     uuid: string;
-    name: string;
-    emailAddress: string;
+    username: string;
+    emailaddress: string;
 };
 export declare type SessionContext = {
     [k: string]: any;
@@ -14,12 +14,15 @@ export declare type Session = {
     start_time: Date;
     end_time: Date;
     context: SessionContext;
+    ip: string;
+    device: string;
+    navigator: object;
 };
 declare class Client {
     session: Session;
     protected recorder: WebRecorder;
     constructor();
-    init(user: Partial<SessionUser>, context: SessionContext): Promise<void>;
+    init(projectId: string, user: Partial<SessionUser>, context: SessionContext): Promise<void>;
     updateContext(context: SessionContext): Promise<void>;
     private write;
     log(...params: any[]): void;

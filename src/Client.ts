@@ -7,8 +7,8 @@ import WebRecorder from "./modules/Recorder";
 export type SessionUser = {
   id: number;
   uuid: string;
-  name: string;
-  emailAddress: string;
+  username: string;
+  emailaddress: string;
 }
 
 export type SessionContext = {
@@ -21,6 +21,9 @@ export type Session = {
   start_time: Date;
   end_time: Date;
   context: SessionContext
+  ip: string;
+  device: string;
+  navigator: object;
 }
 
 class Client  {
@@ -31,9 +34,9 @@ class Client  {
     this.session = {} as Session;
   }
 
-  async init(user: Partial<SessionUser>, context: SessionContext) {
+  async init(projectId: string, user: Partial<SessionUser>, context: SessionContext) {
     try {
-      this.session = await startSession(user, context)
+      this.session = await startSession(projectId, user, context)
     } catch(e) {
 
     } finally {

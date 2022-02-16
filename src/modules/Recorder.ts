@@ -1,4 +1,4 @@
-import { record, getRecordConsolePlugin } from "rrweb";
+import { record, getRecordConsolePlugin, EventType, IncrementalSource } from "rrweb";
 import { eventWithTime } from "rrweb/typings/types";
 import Client from "../Client";
 import { postRecordings } from "../services/recordings";
@@ -11,12 +11,14 @@ class WebRecorder {
 
   constructor(client: Client) {
     this.client = client;
+    console.log(EventType, IncrementalSource)
   }
 
   init() {
     record({
       emit: (e) => this.addEvent(e),
       plugins: [getRecordConsolePlugin()],
+      recordCanvas: true,
     });
     this.startScheduler();
   }
@@ -25,10 +27,12 @@ class WebRecorder {
     this.timeout = setTimeout(() => {
       requestAnimationFrame(async () => {
         try {
-          await postRecordings(this.client.session.uuid, this.events);
+          if(this.events.length) {
+            await postRecordings(this.client.session.uuid, this.events, window.location.href);
+            this.events = [];
+          }
         } catch (e) {
         } finally {
-          this.events = [];
           this.startScheduler();
         }
       });
